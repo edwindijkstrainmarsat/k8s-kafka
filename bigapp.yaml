@@ -1,15 +1,18 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bigapp
-  namespace: argocd
+  name: kafka
 spec:
-  project: default
-  source:
-    repoURL: https://github.com/ehienabs/civo-kafka.git
-    targetRevision: HEAD
-    path: argocd-apps
   destination:
-    name: in-cluster
+    name: ''
     namespace: default
-  
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: apk-cluster/strimzi-apk-cluster
+    repoURL: 'https://github.com/edwindijkstrainmarsat/k8s-kafka/'
+    targetRevision: HEAD
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
